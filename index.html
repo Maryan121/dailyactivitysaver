@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" integrity="sha512-csNcFYJniKjJxRWRV1R7fvnXrycHP6qDR21mgz1ZP55xY5d+aHLfo9/FcGDQLfn2IfngbAHd8LdfsagcCqgTcQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* font-family: 'Courier New', Courier, monospace; */
+            background: linear-gradient(to right,rgb(48, 45, 216),blue, lightblue);
+        }
+        form{
+            background-image: url('images/background.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+            gap:1rem;
+            width: 85%;
+            border-radius:0 0  0 1rem;
+            /* border: solid black 1px; */
+            padding: 2rem;
+        }
+        input{
+            font-size: 1.4rem;
+           
+            padding: 1rem;
+            width: 90%;
+            
+        }
+        input:focus,input:hover{
+            border: blue solid 2px;
+        }
+        button{
+            padding: 1rem;
+            background-color: rgb(61, 61, 233);
+            border: none;
+            color: #fff;
+            font-size: 1.4rem;
+        }
+        button:hover, button:focus{
+            background-color: darkblue;
+        }
+        h1{
+           
+            font-weight: bold;
+            font-size: 1.5rem;
+            align-self: center;
+            color: #fff;
+            text-transform: capitalize;
+        }
+        h1:hover, h1:focus{
+            
+            border-bottom: solid blue 2px;
+            
+        }
+       
+        .container{
+            margin: 0 auto;
+            display: flex;
+          
+            gap: 1rem;
+
+        }
+        #message{
+            
+            display: none;
+            flex-direction: column;
+            margin: 0 auto;
+            width: 80%;
+            box-shadow: 1px 1px 60px 12px rgb(230, 229, 245);
+            
+            text-align: center;
+            background-color: rgba(33, 33, 223, 0.897);
+            color: white;
+            padding: 1rem;
+            line-height: 2rem;
+            border-radius: .4rem;
+        }
+       
+    </style>
+
+
+    <form  id="work"> 
+        <h1>Data saver</h1>
+        <div class="container">
+            <input type="text" id="day" placeholder="Day: " required>
+            <input type="text" id="date" placeholder="Date: " required>
+        </div>
+        
+        <input type="text" placeholder="subject-Name: " id="subject" required>
+        <input type="text" placeholder="Time-spendt-on: " id="timespenton" required>
+        <input type="text" placeholder="What i learnt from it: " id="whatlearntfrom" required> 
+        <button id="submit">save</button>
+    </form>
+    <h1 id="output"></h1>
+    <div id="message">
+        <h2 id="messagetext"></h2>
+        <button id="okbtn">ok</button>
+    </div>
+
+
+    <script>
+        //getting elements
+        let subject = document.getElementById('subject');
+        let time = document.getElementById('timespenton');
+        let whatlearntfrom = document.getElementById('whatlearntfrom');
+        let submit = document.getElementById('submit');
+        let day = document.getElementById('day');
+        let date = document.getElementById('date');
+        let okbtn = document.getElementById('okbtn');
+        let message = document.getElementById('message');
+        let messagetext = document.getElementById('messagetext');
+
+        //adding event listener to the submit button
+        submit.addEventListener('click',function(event){
+            event.preventDefault();
+            //allerting the user if one or more input is empty
+            if(day.value=='' || date.value == '' || subject.value=='' || time.value=='' || whatlearntfrom.value==''){
+                alert('please fill all');  
+            }
+            else{
+                //displaying the message container
+                message.style.display = 'flex';
+                //displaying a message that tells the user where their data is saved
+                //file name 
+                let filename = 'myData.txt';
+
+                messagetext.innerHTML = `
+                saved successifully in a file called ${filename} in your system
+                `;
+                //adding click event so that if the user clicks the okbtn the message will disappear
+                okbtn.addEventListener('click',()=>{
+                message.style.display = 'none';
+                })
+                //the title of the data in the saved file
+                let title = 'what i did today'.toUpperCase();
+                //this section will be the output of data in the file after its saved
+                output = 
+                `
+    ${title}
+    DAY: ${day.value},
+    DATE: ${date.value},
+    SUBJECT-NAME: ${subject.value},
+    TIME-SPENT-ON: ${time.value},
+    WHATILEANTFROM: ${whatlearntfrom.value},
+                    `;
+                
+               
+                //creating the file
+                var myfile = new File(
+                [output],
+                filename,
+                {type:'text; charset=utf8'}
+                )
+                saveAs(myfile); 
+            }
+            
+          
+        }) 
+        
+    </script>
+    
+        
+    
+    
+</body>
+</html> 
+
